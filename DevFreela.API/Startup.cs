@@ -1,4 +1,7 @@
 using DevFreela.API.Models;
+using DevFreela.Application.Services.Implementations;
+using DevFreela.Application.Services.Interfaces;
+using DevFreela.Infrastructure.Persistence;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -21,6 +24,10 @@ namespace DevFreela.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.Configure<OpeningTimeOption>(Configuration.GetSection("OpeningTime"));
+
+            services.AddSingleton<DevFreelaDbContext>();
+
+            services.AddSingleton<IProjectService, ProjectService>();
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
