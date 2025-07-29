@@ -6,13 +6,13 @@ namespace DevFreela.Core.Entities
 {
     public class Project : BaseEntity
     {
-        public Project(string title, string description, int idClient, int idFreeLancer, decimal totalConst)
+        public Project(string title, string description, int idClient, int idFreeLancer, decimal totalCost)
         {
             Title = title;
             Description = description;
             IdClient = idClient;
             IdFreeLancer = idFreeLancer;
-            TotalConst = totalConst;
+            TotalCost = totalCost;
 
             CreatedAt = DateTime.Now;
             Status = ProjectStatusEnum.Created;
@@ -26,7 +26,7 @@ namespace DevFreela.Core.Entities
         public User Client { get; private set; }
         public int IdFreeLancer { get; private set; }
         public User Freelancer { get; private set; }
-        public decimal TotalConst { get; private set; }
+        public decimal TotalCost { get; private set; }
         public DateTime CreatedAt { get; private set; }
         public DateTime? StartedAt { get; private set; }
         public DateTime? FinishedAd { get; private set; }
@@ -61,7 +61,7 @@ namespace DevFreela.Core.Entities
         {
             Title = title;
             Description = description;
-            TotalConst = totalCost;
+            TotalCost = totalCost;
         }
     }
 }

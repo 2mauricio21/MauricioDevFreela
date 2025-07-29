@@ -63,7 +63,7 @@ namespace DevFreela.Application.Services.Implementations
                 project.Id,
                 project.Title,
                 project.Description,
-                project.TotalConst,
+                project.TotalCost,
                 project.StartedAt,
                 project.FinishedAd);
             return projectDetailsViewModel;
