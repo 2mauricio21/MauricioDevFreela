@@ -23,16 +23,6 @@ namespace DevFreela.Application.Services.Implementations
             _connectionString = configuration.GetConnectionString("DevFreelaCs");
         }
 
-        public int Create(NewProjectInputModel inputModel)
-        {
-            var project = new Project(inputModel.Title, inputModel.Description, inputModel.IdCliente, inputModel.IdFreelance, inputModel.TotalCost);
-
-            _dbContext.Projects.Add(project);
-
-            _dbContext.SaveChanges();
-
-            return project.Id;
-        }
 
         public void CreateComment(CreateCommentInputModel inputModel)
         {
