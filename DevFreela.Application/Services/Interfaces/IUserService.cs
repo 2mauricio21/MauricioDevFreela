@@ -1,13 +1,11 @@
-﻿using DevFreela.Core.Entities;
-using System.Collections.Generic;
+﻿using DevFreela.Application.InputModel;
+using DevFreela.Application.ViewModels;
 
 namespace DevFreela.Application.Services.Interfaces
 {
     public interface IUserService
     {
-        List<User> GetAll();
-
-        User GetById(int id);
-
+        UserViewModel GetUser(int id);
+        int Create(CreateUserInputModel inputModel);
     }
 }
