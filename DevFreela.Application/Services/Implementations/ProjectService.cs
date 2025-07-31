@@ -2,7 +2,6 @@
 using DevFreela.Application.InputModel;
 using DevFreela.Application.Services.Interfaces;
 using DevFreela.Application.ViewModels;
-using DevFreela.Core.Entities;
 using DevFreela.Infrastructure.Persistence;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
@@ -21,16 +20,6 @@ namespace DevFreela.Application.Services.Implementations
         {
             _dbContext = dbContext;
             _connectionString = configuration.GetConnectionString("DevFreelaCs");
-        }
-
-
-        public void CreateComment(CreateCommentInputModel inputModel)
-        {
-            var comment = new ProjectComment(inputModel.Content, inputModel.IdProject, inputModel.IdUser);
-
-            _dbContext.ProjectComments.Add(comment);
-
-            _dbContext.SaveChanges();
         }
 
         public void Delete(int id)
