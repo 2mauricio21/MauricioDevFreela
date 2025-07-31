@@ -1,5 +1,4 @@
 ﻿using Dapper;
-using DevFreela.Application.InputModel;
 using DevFreela.Application.Services.Interfaces;
 using DevFreela.Application.ViewModels;
 using DevFreela.Infrastructure.Persistence;
@@ -86,15 +85,6 @@ namespace DevFreela.Application.Services.Implementations
                 var script = "UPDATE Project SET Status = @status, StartedAt = @startedat WHERE Id = @id";
                 sqlConnection.Execute(script, new { status = project.Status, startedat = project.StartedAt, id });
             }
-        }
-
-        public void Update(UpdateProjectInputModel inputModel)
-        {
-            var project = _dbContext.Projects.SingleOrDefault(p => p.Id == inputModel.Id);
-
-            project.Update(inputModel.Title, inputModel.Description, inputModel.TotalCost);
-
-            _dbContext.SaveChanges();
         }
     }
 }

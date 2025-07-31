@@ -1,6 +1,6 @@
 ﻿using DevFreela.Application.Commands.CreateComment;
 using DevFreela.Application.Commands.CreateProject;
-using DevFreela.Application.InputModel;
+using DevFreela.Application.Commands.UpdateProject;
 using DevFreela.Application.Services.Interfaces;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -56,14 +56,15 @@ namespace DevFreela.API.Controllers
         }
 
         [HttpPut]
-        public IActionResult Put(int id, [FromBody] UpdateProjectInputModel inputModel)
+        public async Task<IActionResult> Put(int id, [FromBody] UpdateProjectCommand command)
         {
-            if (inputModel.Description.Length > 200)
+            if (command.Description.Length > 200)
             {
                 return BadRequest();
             }
 
-            _projectService.Update(inputModel);
+            //_projectService.Update(command);
+            await _mediator.Send(command);
 
             return NoContent();
         }
