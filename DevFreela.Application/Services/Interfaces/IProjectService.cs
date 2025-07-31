@@ -1,5 +1,4 @@
-﻿using DevFreela.Application.InputModel;
-using DevFreela.Application.ViewModels;
+﻿using DevFreela.Application.ViewModels;
 using System.Collections.Generic;
 
 namespace DevFreela.Application.Services.Interfaces
@@ -8,7 +7,5 @@ namespace DevFreela.Application.Services.Interfaces
     {
         List<ProjectViewModel> GetAll(string query);
         ProjectDetailsViewModel GetById(int id);
-        void Start(int id);
-        void Finish(int id);
     }
 }
