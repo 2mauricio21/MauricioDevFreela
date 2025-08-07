@@ -3,7 +3,6 @@ using DevFreela.Application.ViewModels;
 using DevFreela.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace DevFreela.Application.Services.Implementations
@@ -17,17 +16,6 @@ namespace DevFreela.Application.Services.Implementations
         {
             _dbContext = dbContext;
             _connectionString = configuration.GetConnectionString("DevFreelaCs");
-        }
-
-        public List<ProjectViewModel> GetAll(string query)
-        {
-            var projects = _dbContext.Projects;
-
-            var projectsViewModel = projects
-                .Select(p => new ProjectViewModel(p.Id, p.Title, p.CreatedAt))
-                .ToList();
-
-            return projectsViewModel;
         }
 
         public ProjectDetailsViewModel GetById(int id)
