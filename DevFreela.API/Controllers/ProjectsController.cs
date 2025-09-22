@@ -5,7 +5,7 @@ using DevFreela.Application.Commands.FinishProject;
 using DevFreela.Application.Commands.StartProject;
 using DevFreela.Application.Commands.UpdateProject;
 using DevFreela.Application.Queries.GetAllProjects;
-using DevFreela.Application.Services.Interfaces;
+using DevFreela.Application.Queries.GetAllProjectsById;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
@@ -15,11 +15,9 @@ namespace DevFreela.API.Controllers
     [Route("api/projects")]
     public class ProjectsController : ControllerBase
     {
-        private readonly IProjectService _projectService;
         private readonly IMediator _mediator;
-        public ProjectsController(IProjectService projectService, IMediator mediator)
+        public ProjectsController(IMediator mediator)
         {
-            _projectService = projectService;
             _mediator = mediator;
         }
         [HttpGet]
@@ -32,9 +30,11 @@ namespace DevFreela.API.Controllers
         }
 
         [HttpGet("{id}")]
-        public IActionResult GetById(int id)
+        public async Task<IActionResult> GetById(int id)
         {
-            var project = _projectService.GetById(id);
+            var query = new GetProjectByIdQuery(id);
+
+            var project = await _mediator.Send(query);
 
             if (project == null)
             {
@@ -53,8 +53,6 @@ namespace DevFreela.API.Controllers
                 return BadRequest();
             }
 
-            //var id = _projectService.Create(inputModel);
-
             var id = await _mediator.Send(command);
 
             return CreatedAtAction(nameof(GetById), new { id }, command);
@@ -68,7 +66,6 @@ namespace DevFreela.API.Controllers
                 return BadRequest();
             }
 
-            //_projectService.Update(command);
             await _mediator.Send(command);
 
             return NoContent();
