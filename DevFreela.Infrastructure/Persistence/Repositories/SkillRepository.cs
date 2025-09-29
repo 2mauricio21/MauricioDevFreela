@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace DevFreela.Infrastructure.Repositories
+namespace DevFreela.Infrastructure.Persistence.Repositories
 {
     public class SkillRepository : ISkillRepository
     {
@@ -18,18 +18,27 @@ namespace DevFreela.Infrastructure.Repositories
             _connectionString = configuration.GetConnectionString("DevFreelaCs");
         }
 
-        public async Task<List<SkillDTO>> GetAll()
+        public async Task<List<SkillDTO>> GetAllAsync()
         {
             using (var sqlConnection = new SqlConnection(_connectionString))
             {
                 sqlConnection.Open();
 
-                var script = "SELECT ID, Description FROM Skills";
+                var script = "SELECT Id, Description FROM Skills";
 
                 var skills = await sqlConnection.QueryAsync<SkillDTO>(script);
 
                 return skills.ToList();
             }
+
+            // COM EF CORE
+            //var skills = _dbContext.Skills;
+
+            //var skillsViewModel = skills
+            //    .Select(s => new SkillViewModel(s.Id, s.Description))
+            //    .ToList();
+
+            //return skillsViewModel;
         }
     }
 }
