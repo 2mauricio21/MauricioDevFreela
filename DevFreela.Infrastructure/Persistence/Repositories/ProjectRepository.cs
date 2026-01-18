@@ -24,6 +24,11 @@ namespace DevFreela.Infrastructure.Persistence.Repositories
             return await _dbContext.Projects.ToListAsync();
         }
 
+        public async Task<Project> GetByIdAsync(int id)
+        {
+            return await _dbContext.Projects.SingleOrDefaultAsync(p => p.Id == id);
+        }
+
         public async Task<Project> GetDetailsByIdAsync(int id)
         {
             return await _dbContext.Projects
@@ -50,14 +55,25 @@ namespace DevFreela.Infrastructure.Persistence.Repositories
             }
         }
 
+        public async Task FinishAsync(Project project)
+        {
+            using var sqlConnection = new SqlConnection(_connectionString);
+            var script = "UPDATE Projects SET Status = @status, FinishedAt = @finishAt WHERE Id = @id";
+
+            await sqlConnection.ExecuteAsync(script, new { status = project.Status, startedAt = project.StartedAt, project.Id });
+        }
+
+        public async Task CancelAsync(Project project)
+        {
+            using var sqlConnection = new SqlConnection(_connectionString);
+            var script = "UPDATE Projects SET Status = @status WHERE Id = @id";
+
+            await sqlConnection.ExecuteAsync(script, new { status = project.Status, startedAt = project.StartedAt, project.Id });
+        }
+
         public async Task SaveChangesAsync()
         {
             await _dbContext.SaveChangesAsync();
-        }
-
-        public async Task<Project> GetByIdAsync(int id)
-        {
-            return await _dbContext.Projects.SingleOrDefaultAsync(p => p.Id == id);
         }
 
         public async Task AddCommentAsync(ProjectComment projectComment)

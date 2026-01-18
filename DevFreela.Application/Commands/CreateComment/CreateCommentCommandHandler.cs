@@ -19,6 +19,8 @@ namespace DevFreela.Application.Commands.CreateComment
             var comment = new ProjectComment(request.Content, request.IdProject, request.IdUser);
 
             await _projectRepository.AddCommentAsync(comment);
+            await _projectRepository.SaveChangesAsync();
+
             return Unit.Value;
         }
     }

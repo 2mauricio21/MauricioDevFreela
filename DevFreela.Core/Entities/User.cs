@@ -10,12 +10,11 @@ namespace DevFreela.Core.Entities
             FullName = fullName;
             Email = email;
             BirthName = birthName;
-            CreatedAt = DateTime.Now;
             Active = true;
             Password = password;
             Role = role;
+            CreatedAt = DateTime.Now;
             // Initialize collections
-            Skills = new List<UserSkill>();
             OwnerProjects = new List<Project>();
             FreelanceProjects = new List<Project>();
         }
